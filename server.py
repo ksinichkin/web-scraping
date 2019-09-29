@@ -1,20 +1,3 @@
-"""
-Install required modules:
-
-pip install lxml
-pip install requests
-pip install flask
-pip install waitress
-pip install validators
-
-or
-
-pip install .
-#############
-Run
-
-python server.py
-"""
 from waitress import serve
 import page_parser  # module for parsing the app page and getting app info
 from flask import Flask, request, render_template
@@ -68,7 +51,7 @@ def get_app_info():
             "App's description":
                 "//p[@itemprop='description']"
         }
-        # We will use xPathParser parser from page_parser
+        # Use xPathParser parser from page_parser
         parser = page_parser.xPathParser()
 
         page.parse_page(parser, parsing_schema)

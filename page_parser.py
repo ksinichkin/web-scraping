@@ -14,8 +14,7 @@ class BaseConnectionError(Exception):
     def __init__(self, message, status_code=None, traceback=None):
         self.message = message
         self.traceback = traceback
-        if status_code:
-            self.status_code = status_code
+        self.status_code = status_code
 
     def __str__(self):
         return self.message
@@ -35,7 +34,7 @@ class ClientRequestError(BaseConnectionError):
 
 class Parser:
     """Base parser class
-    All page parsers should be inherited from this one,
+    All page parsers should be inherited from this class,
     e.g. xPathParser(Parser).
     """
 
@@ -76,16 +75,16 @@ class Page:
         self.__content = ""
         self.__parsed_page = {}
 
-    def load(self, url):
+    def load(self, url, timeout=10):
         """ Loading html page specified in url and stores in content.
         :param url: string
         :returns none
         """
         try:
-            resp = requests.get(url)
+            resp = requests.get(url, timeout=timeout)
             resp.raise_for_status()
         except requests.Timeout:
-            msg = f'Timeout error during request {url}'
+            msg = f'Timeout ({timeout}) error during request {url}'
             logging.error(msg)
             raise BaseConnectionError(msg, traceback=traceback.format_exc())
         except requests.HTTPError as err:
