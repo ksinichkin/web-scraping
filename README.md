@@ -1,4 +1,7 @@
 # web-scraping
+## Requirements
+Python 3   
+Modules in setup.py
 
 ## Install required modules:
 `pip install .`   
